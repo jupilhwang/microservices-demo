@@ -8,7 +8,7 @@
 
 Spring Boot, Go Kit, Node.js on Docker env.
 
-##### Screenshot
+#### Screenshot
 ![](./img/sockshop-frontend.png)
 
 
