@@ -15,6 +15,7 @@ istio를 사용하기 위해서는, CRD, RBAC과 Initializers를 Enable시켜야
 
 Istio sidecar auto injection : Initializer concept in K8s를 사용한다. Initializer는 Alpha feature로 기본적으로 disable되어 있다.
 
+
 ```bash
 minikube start \
   --feature-gates=CustomResourceValidation=true \

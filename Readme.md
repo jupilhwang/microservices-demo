@@ -1,7 +1,7 @@
 ## Microservices-demo
 
 1. [Sock-shop Application](Sock-shop-microservices-demo.md)
-2. [Istio](Istio-side-car.md)
+2. [Istio를 이용한 Application Routing and discovery](Istio-side-car.md)
 3. CQRS, Saga 
 
 ### Microservices Patterns
