@@ -182,3 +182,12 @@ prometheus : http://192.168.99.1000:31090
 >alert를 위해서는 "minitoring-alert" manifest를 이용하면 된다. 
 >alert은 slack webhook을 통해서 slack에 메시지를 전송한다.
 >여기에서는 Pass.. 다음 기회에..
+
+
+
+##### Run Load-Test
+There is a separate load-test available to simulate user traffic to the application. For more information see Load Test. This will send some traffic to the application, which will form the connection graph that you can view in Scope or Weave Cloud. You should also check what ip your minikube instance has been assigned and use that in the load test.
+
+```bash
+docker run --rm weaveworksdemos/load-test -d 5 -h $(minikube ip):30001 -c 2 -r 100
+````
