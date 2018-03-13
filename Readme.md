@@ -4,7 +4,9 @@
 2. [Istio를 이용한 Application Routing and discovery](Istio-side-car.md)
 3. CQRS, Saga 
 
-### Microservices Patterns
+### Microservices Patterns 
+by Chris Richardson
+
 [![Microservices Patterns](./img/MicroservicePatternLanguage.jpg)](http://microservices.io/patterns/index.html)
   - Core Pattern
   - Decomposition

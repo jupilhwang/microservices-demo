@@ -14,7 +14,7 @@
 ![](./img/sockshop-frontend.png)
 
 
-### Design
+### DesignChris Richardson
 #### 목표
 - Demonstrate microservice best practices (and mistakes!)
 - Be cross-platform: deploy to all orchestrators
