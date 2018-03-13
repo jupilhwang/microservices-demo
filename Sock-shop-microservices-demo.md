@@ -136,7 +136,7 @@ spec:
     app: grafana
     component: core
 ```
-변>경 후
+변경 후
 ```yml
 apiVersion: v1
 kind: Service
@@ -158,12 +158,21 @@ spec:
     component: core
 ```
 
+Loadbalancer를 nodePort로 변경한다
+```bash
+kubectl apply -f deploy/kubernetes/manifests-monitoring/grafana-svc.yaml
+```
+
 ##### Open Grafana Dashbaord and prometheus
 Grafana는 31300, Prometheus는 31090 Nodeport로 제공된다 
 
 grafana Dashboard : http://192.168.99.100:31300
-![](img/sock-shp-monitoring-grafana.png)
+![](img/sock-shop-monitoring-grafana-1.png)
 login은 admin/admin
+
+>Prometheus Datasource가 추지 않은 경우, Datasource를 추가해 준다
+![](img/sock-shop-monitoring-grafana-add-datasource-prometheus.png)
+
 
 prometheus : http://192.168.99.1000:31090
 ![](img/sock-shop-monitoring-promethues.png)
