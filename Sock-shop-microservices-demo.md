@@ -100,7 +100,8 @@ kubectl get pods -n=sock-shop
 #### Sock-shop webpage
 http://192.168.99.100:30001
 
-<!-- #### Opentracing
+<!-- 
+#### Opentracing
 Opentracing을 실행시키기 위해서
 ```bash
 kubectl create -f deploy/kubernetes/manifests-zipkin/zipkin-ns.yaml -f deploy/kubernetes/manifests-zipkin
@@ -178,4 +179,6 @@ prometheus : http://192.168.99.1000:31090
 ![](img/sock-shop-monitoring-promethues.png)
 
 
->alert를 위해서는 "minitoring-alert" manifest를 이용하면 된다. 여기에서는 Pass.. 다음 기회에..
+>alert를 위해서는 "minitoring-alert" manifest를 이용하면 된다. 
+>alert은 slack webhook을 통해서 slack에 메시지를 전송한다.
+>여기에서는 Pass.. 다음 기회에..
