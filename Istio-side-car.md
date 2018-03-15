@@ -138,4 +138,3 @@ curl http://localhost:8081
 ```sh
 GROUP=weaveworksdemos COMMIT=test ./scripts/push.sh
 ```
-
