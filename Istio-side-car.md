@@ -108,6 +108,35 @@ istioctl create -f route-rule-reviews-burr-v3.yaml
 ```
 
 ### Sock-shop cart
+Sock-shop의 Cart부분을 git clone한다.
 ```sh
-git clone 
+git clone https://github.com/microservices-demo/carts.git
 ```
+
+#### Build
+
+##### Java
+```sh
+mvn -DskipTests package
+```
+##### Docker
+```sh
+GROUP=weaveworksdemos COMMIT=test ./scripts/build.sh
+```
+##### Run
+```sh
+mvn spring-boot:run
+```
+##### Check
+```sh
+curl http://localhost:8081/health
+```
+##### Use
+```sh
+curl http://localhost:8081
+```
+##### Push
+```sh
+GROUP=weaveworksdemos COMMIT=test ./scripts/push.sh
+```
+
