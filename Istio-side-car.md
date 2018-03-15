@@ -114,7 +114,6 @@ git clone https://github.com/microservices-demo/carts.git
 ```
 
 #### Build
-
 ##### Java
 ```sh
 mvn -DskipTests package
