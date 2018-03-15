@@ -60,4 +60,54 @@ or
 
 웹페이지 접속 http://192.168.99.100:30881/productpage 
 
-### Istio
+#### route rule with version
+기본으로 review 세가지 버전이 번갈아 가면서 나오나, 아래오 같이 조정한다.
+
+[route-rule-reviews-v3.yaml]
+```yaml
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: reviews-default
+spec:
+  destination:
+    name: reviews
+  precedence: 1
+  route:
+  - labels:
+      version: v3
+    weight: 100
+```
+v3으로 routing rule을 100% 준다.
+```sh
+istioctl create -f samples/kube/route-rules-reviews-v3.yaml
+```
+![](img/istio-bookinfo-route-rule-v3.png)
+
+#### route rule with user burr
+[route-rule-reviews-burr-v3.yaml]
+```yaml
+apiversion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: reviews-default
+spec:
+  destination:
+    name: reviews
+  match:
+    httpHeaders:
+      cookie:
+        regex: ^(.*?;)?(user=burr)(;.*)?$
+  percendence: 2
+  route:
+  - labels:
+      version: v3
+```
+```sh
+istioctl create -f route-rule-reviews-burr-v3.yaml
+```
+
+### Sock-shop cart
+```sh
+git clone 
+```
