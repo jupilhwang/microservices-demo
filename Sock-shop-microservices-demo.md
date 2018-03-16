@@ -47,6 +47,8 @@ sock shop - microservices application은 다양한 Docker환경에 Deploy할 수
 >  - docker
 >  - minikube
 >  - kubectl
+>  - maven
+>  - JDK1.8
 
 #### Clone the microservices-demo repo
 ```bash
@@ -99,6 +101,16 @@ kubectl get pods -n=sock-shop
 
 #### Sock-shop webpage
 http://192.168.99.100:30001
+
+##### User Accounts
+|Username|Password|
+|--|--|
+|user|password|
+|user1|password|
+|Eve_Berger|eve|
+
+![](img/sock-shop-catalogue.png)
+
 
 <!-- 
 #### Opentracing
@@ -188,6 +200,12 @@ prometheus : http://192.168.99.1000:31090
 ##### Run Load-Test
 There is a separate load-test available to simulate user traffic to the application. For more information see Load Test. This will send some traffic to the application, which will form the connection graph that you can view in Scope or Weave Cloud. You should also check what ip your minikube instance has been assigned and use that in the load test.
 
-```bash
+```sh
 docker run --rm weaveworksdemos/load-test -d 5 -h $(minikube ip):30001 -c 2 -r 100
-````
+```
+
+#### Uninstall the Sock Shop application
+```sh
+kubectl delete -f deploy/kubernetes/manifests/sock-shop-ns.yaml -f deploy/kbernetes/manifrests
+minikube delete
+```

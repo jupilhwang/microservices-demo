@@ -2,7 +2,11 @@
 
 1. [Sock-shop Application - Microservices demo](Sock-shop-microservices-demo.md)
 2. [Istio를 이용한 Application Routing and discovery](Istio-side-car.md)
-3. [CQRS/ES - Springboot, Axon](http://github.com/danielkang  )
+3. CQRS/Event Sourcing - Springboot, Axon
+4. Saga
+5. Event-driven architecture
+6. Database for microservice
+7. ...
 
 ### Microservices Patterns 
 by Chris Richardson

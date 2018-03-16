@@ -110,18 +110,30 @@ istioctl create -f route-rule-reviews-burr-v3.yaml
 ### Sock-shop cart
 Sock-shop의 Cart부분을 git clone한다.
 ```sh
-git clone https://github.com/microservices-demo/carts.git
+git clone https://github.com/microservices-demo/orders.git
 ```
+
+/src/main/java/works/weave/socks/orders/controllers/OrdersController.java
+![](img/sock-shop-orders-OrdersController-modified.png)
+return값을 1000F로 수정한다.
 
 #### Build
 ##### Java
+jar패키지를 생성한다.
 ```sh
 mvn -DskipTests package
 ```
 ##### Docker
-```sh
+<!-- ```sh
 GROUP=weaveworksdemos COMMIT=test ./scripts/build.sh
+``` -->
+docker이미지를 바로 minikube kubernetes cluster의 host에 생성하기 위해서 docker 환경설정을 한다.
+```sh
+eval $(minikube docker-env)
 ```
+![](img/sock-shop-orders-test-docker-image.png)
+
+<!-- 
 ##### Run
 ```sh
 mvn spring-boot:run
@@ -137,4 +149,97 @@ curl http://localhost:8081
 ##### Push
 ```sh
 GROUP=weaveworksdemos COMMIT=test ./scripts/push.sh
+``` -->
+
+##### Deploy to K8s
+[](orders-test.yaml)
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: orders-v2
+  namespace: sock-shop
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: orders
+        version: v2
+    spec:
+      containers:
+      - name: orders
+        image: namoo4u/orders
+        imagePullPolicy: IfNotPresent
+        env:
+         - name: ZIPKIN
+           value: zipkin.jaeger.svc.cluster.local
+         - name: JAVA_OPTS
+           value: -Xms64m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom
+        ports:
+        - containerPort: 80
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 10001
+          capabilities:
+            drop:
+              - all
+            add:
+              - NET_BIND_SERVICE
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 300
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 180
+          periodSeconds: 3
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+```
+
+
+```sh
+kubectl get pod order-v2 -n sock-shop -o yaml | kubectl replace --force -f -
+```
+
+
+```sh
+kubectl delete -f deploy/kubernetes/manifests/sock-shop-ns.yaml
+kubectl apply -f manifests/sock-shop-ns.yaml
+kubectl apply -f <(istioctl kube-inject -f complete-demo.yaml)
+```
+
+istio route rule
+[route-rule-sock-shop-orders.yaml]
+```yaml
+metadata:
+  name: my-rule
+  namespace: sock-shop
+spec:
+  destination:
+    name: orders
+  route:
+  - labels:
+      version: v2
+    weight: 50
+  - labels:
+      version: v1
+    weight: 50
+```
+
+```sh
+istioctl apply -f route-rule-sock-shop-orders.yaml
 ```
