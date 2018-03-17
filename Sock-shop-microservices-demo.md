@@ -209,3 +209,23 @@ docker run --rm weaveworksdemos/load-test -d 5 -h $(minikube ip):30001 -c 2 -r 1
 kubectl delete -f deploy/kubernetes/manifests/sock-shop-ns.yaml -f deploy/kbernetes/manifrests
 minikube delete
 ```
+
+#### AutoScailing
+예제: front-end르 AutoScailing - CPU Utilization이 50%이면 Replica를 최대 10개까지 늘린다.
+```yaml
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: front-end
+  namespace: sock-shop
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    name: front-end
+
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+```

@@ -2,6 +2,11 @@
 ![](img/istio.png)
 
 ### Installation
+macOS 또는 Linux 사용자는 
+```sh
+curl -L https://git.io/getIstio | sh -
+```
+또는 
 http://github.com/istio/istio/releases 에서 환경에 맞는 istio를 다운로드 한다.
 ![](img/istio-download.png)
 
@@ -26,7 +31,7 @@ minikube start \
 ``` -->
 
 ### Istio 설정
-download받은 istio파일의 install/kubernetes/istio.yaml을 적용한다.
+download받은 istio파일의 install/kubernetes/istio.yaml을 적용한다.  (실 운영환경에서는 istio-auth.yaml 권장 - 네임스페이스에 CA를 디플로이하고 서비스간에 mTLS를 이용한 통신을 가능하게 한다.)
 ```sh
 kubectl apply -f install/kubernetes/istio.yaml
 ```
@@ -42,10 +47,39 @@ minikube에서는 LoadBalancer를 지원하지 않기 때문에, istio-ingress�
 
 ![](img/istio-ingress-nodeport.png)
 
+#### the Metrics collection
+```sh
+kubectl apply -f install/kubernetes/addons/prometheus.yaml
+kubectl apply -f install/kubernetes/addons/grafana.yaml
+kubectl apply -f install/kubernetes/addons/servicegraph.yaml
+kubectl apply -f install/kubernetes/addons/zipkin.yaml
+```
+
+##### the Grafana dashboard
+```sh
+kubectl port-forward $(kubectl get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}' -n istio-system) 3000:3000 -n istio-system
+```
+http://localhost:3000/dashboard/db/istio-dashboard 에 접속한다.
+![](img/istio-grafana_dashboard.png)
+
+minikube이 아니라 실제 K8s Cluster에서 LoadBalancer를 사용하는 경우, externalIP로 바로 접속하면 된다
+```sh
+kubectl get svc grafana -n istio-system
+```
+##### the ServiceGraph service
+클러스터내에서 서비스간의 상호관계를 graphical visulization으로 보여준다.
+```sh
+kubectl port-forward $(kubectl get pod -l app=servicegraph -o jsonpath='{.items[0].metadata.name}' -n istio-system) 8088:8088 -n istio-system
+```
+![](img/istio-servicegraph.png)
+
+##### Enabling distribued request tracing with Zipkin
+
 
 ### Istio Sample Program - bookinfo
+![](img/istio-bookinfo-withistio.svg)
 ```sh
-kubectl apply -f <(istioctl kube-inject --debug -f samples/bookinfo/kube/bookinfo.yaml)
+kubectl apply -f <(istioctl kube-inject -f samples/bookinfo/kube/bookinfo.yaml)
 ```
 ![](img/istio-sample-bookinfo.png)
 
