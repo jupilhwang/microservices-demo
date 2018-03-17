@@ -81,7 +81,7 @@ minikube start --memory 6144
 #### Start Sock-shop webpage
 sock-shop application을 minikube에 배포한다
 ```bash
-kubectl create -f deploy/kubernetes/manifest/sock-shop-ns.yml -f deply/kubernets/manifests
+ kubectl create -f deploy/kubernetes/manifests/sock-shop-ns.yaml -f deploy/kubernetes/manifests
 ```
 ![](img/sock-shop-deploy.png)
 
