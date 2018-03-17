@@ -3,7 +3,7 @@
 ## Sock Shop : A Microservice Demo Application
 
 이 응용 프로그램은 양말을 판매하는 온라인 상점의 사용자 인터페이스 그리고 Microservice 와 Cloud Native 기술 데모 및 테스트를 돕기위한 것으로, WeaveWorks에서 Open Source로 배포한 것이다.
-출처 : http://github.com/microservices-demo/microservices-demo
+출처 : https://github.com/microservices-demo/microservices-demo
 
 >기술 셋 : **Spring Boot, Go Kit, Node.js on Docker** (dotnet, microprofile)
 --> Microprofile, dotnet core, Python 등 사용가능
@@ -52,7 +52,7 @@ sock shop - microservices application은 다양한 Docker환경에 Deploy할 수
 
 #### Clone the microservices-demo repo
 ```bash
-git clone https://github.com/microservices-demo/microservices-demo
+git clone https://github.com/microservices-demo/microservices-demo.git
 cd microservices-demo
 ```
 #### Start minikube with 4GB Memory (if you can, 8GB is better)
