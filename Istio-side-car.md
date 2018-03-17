@@ -22,12 +22,12 @@ Istio sidecar auto injection : Initializer concept in K8s를 사용한다. Initi
 
 ```sh
 minikube start \
-  --feature-gates=CustomResourceValidation=true \
-  --extra-config=apiserver.authorization-mode=RBAC \
-  --extra-config=controller-manager.ClusterSigningCertFile="/var/lib/localkube/certs/ca.crt" \
+  --extra-config=apiserver.Authorization.Mode=RBAC
+	--extra-config=controller-manager.ClusterSigningCertFile="/var/lib/localkube/certs/ca.crt" \
 	--extra-config=controller-manager.ClusterSigningKeyFile="/var/lib/localkube/certs/ca.key" \
 	--extra-config=apiserver.Admission.PluginNames=NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota \
 	--kubernetes-version=v1.9.0
+
 ``` -->
 
 ### Istio 설정
@@ -48,6 +48,7 @@ minikube에서는 LoadBalancer를 지원하지 않기 때문에, istio-ingress�
 ![](img/istio-ingress-nodeport.png)
 
 #### the Metrics collection
+필요시 istio서비스 모니터링을 위해서 Prometheus, Grafana, Zipkin 그리고 ServiceGraph를 사용한다.
 ```sh
 kubectl apply -f install/kubernetes/addons/prometheus.yaml
 kubectl apply -f install/kubernetes/addons/grafana.yaml
@@ -62,7 +63,7 @@ kubectl port-forward $(kubectl get pod -l app=grafana -o jsonpath='{.items[0].me
 http://localhost:3000/dashboard/db/istio-dashboard 에 접속한다.
 ![](img/istio-grafana_dashboard.png)
 
-minikube이 아니라 실제 K8s Cluster에서 LoadBalancer를 사용하는 경우, externalIP로 바로 접속하면 된다
+K8s Cluster에서 LoadBalancer를 사용하는 경우, externalIP로 바로 접속하면 된다
 ```sh
 kubectl get svc grafana -n istio-system
 ```
