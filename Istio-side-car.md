@@ -149,8 +149,8 @@ git clone https://github.com/microservices-demo/orders.git
 ```
 
 /src/main/java/works/weave/socks/orders/controllers/OrdersController.java
-![](img/sock-shop-orders-OrdersController-modified.png)
-return값을 1000F로 수정한다.
+<!-- ![](img/sock-shop-orders-OrdersController-modified.png)
+return값을 1000F로 수정한다. -->
 
 #### Build
 ##### Java
