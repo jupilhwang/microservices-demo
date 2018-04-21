@@ -3,7 +3,7 @@
 0. [사전준비](Whatyouneed.md)
 1. [Sock-shop Application - Microservices demo](Sock-shop-microservices-demo.md)
 2. [Istio를 이용한 Application Routing and discovery](Istio-side-car.md)
-3. CQRS/Event Sourcing - Springboot, Axon
+3. [CQRS/Event Sourcing](https://github.com/DannyKang/CQRS-ESwithAxon)
 4. Saga
 5. Event-driven architecture
 6. Database for microservice
